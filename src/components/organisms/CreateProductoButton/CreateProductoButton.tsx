@@ -156,6 +156,22 @@ export default function CreateProductoButton({ empresaNit, onProductoCreated }: 
         if (btnGenerar) {
           btnGenerar.addEventListener("click", (e) => handleGenerarDescripcion(e));
         }
+        
+        const codigoInput = document.getElementById("swal-codigo") as HTMLInputElement;
+        if (codigoInput) {
+          codigoInput.addEventListener("input", () => {
+            const value = codigoInput.value.trim();
+            const codigoPattern = /^[A-Za-z]+-\d+$/;
+            
+            if (value && !codigoPattern.test(value)) {
+              codigoInput.classList.add("border-red-500");
+              codigoInput.classList.remove("border-[#E1E8ED]");
+            } else {
+              codigoInput.classList.remove("border-red-500");
+              codigoInput.classList.add("border-[#E1E8ED]");
+            }
+          });
+        }
       },
       preConfirm: async () => {
         const codigo = (document.getElementById("swal-codigo") as HTMLInputElement)?.value.trim();
@@ -165,6 +181,15 @@ export default function CreateProductoButton({ empresaNit, onProductoCreated }: 
 
         if (!codigo || !nombre) {
           Swal.showValidationMessage("Por favor completa los campos requeridos (Código y Nombre)");
+          return false;
+        }
+
+        const codigoPattern = /^[A-Za-z]+-\d+$/;
+        if (!codigoPattern.test(codigo)) {
+          Swal.showValidationMessage(
+            "El código debe seguir el formato 'nombre-numero' (ej: PROD-001, LAPTOP-123). " +
+            "Solo se permiten letras, un guion y números."
+          );
           return false;
         }
 
