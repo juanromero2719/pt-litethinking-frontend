@@ -195,7 +195,7 @@ export default function GenerarInventarioButton({
   };
 
   return (
-    <ProtectedAction permission={can.productos.listar}>
+    <ProtectedAction permission={can.productos.crear}>
       <Button
         onClick={handleOpenModal}
         variant="primary"
