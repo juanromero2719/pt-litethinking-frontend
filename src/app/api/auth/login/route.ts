@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   try {
     const r = await djangoClient.post("/api/auth/login/", { username, password });
-    const { access, refresh } = r.data;
+    const { access, refresh, rol } = r.data;
 
     const res = NextResponse.json({ ok: true });
 
@@ -23,6 +23,15 @@ export async function POST(req: Request) {
       secure: false,
       path: "/",
     });
+
+    if (rol) {
+      res.cookies.set("user_role", rol, {
+        httpOnly: false,
+        sameSite: "lax",
+        secure: false,
+        path: "/",
+      });
+    }
 
     return res;
   } catch {

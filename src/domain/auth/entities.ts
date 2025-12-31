@@ -1,9 +1,11 @@
 export type UserId = string;
+export type UserRole = "Admin" | "Externo" | null;
 
 export type AuthSession = {
   accessToken: string;
   refreshToken?: string;
   userId?: UserId;
+  role?: UserRole;
 };
 
 export function validateCredentials(username: string, password: string) {
