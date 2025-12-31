@@ -1,4 +1,4 @@
-import type { AuthRepository } from "@/domain/auth/ports";
+import type { AuthRepository, RegisterData, RegisterResponse } from "@/domain/auth/ports";
 import type { AuthSession } from "@/domain/auth/entities";
 import { client } from "@/lib/axios/client";
 
@@ -14,5 +14,14 @@ export const nextAuthRepository: AuthRepository = {
   },
   async logout() {
     await client.post("/auth/logout");
+  },
+  async register(data: RegisterData): Promise<RegisterResponse> {
+    try {
+      const response = await client.post("/auth/registro", data);
+      return response.data;
+    } catch (error: any) {
+      const message = error?.response?.data?.message || error?.response?.data?.error || "Error al registrar usuario";
+      throw new Error(message);
+    }
   },
 };

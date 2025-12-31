@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Swal from "sweetalert2";
 import { useAuth } from "@/application/auth/useAuth";
 import FormField from "@/components/molecules/FormField";
@@ -63,6 +64,13 @@ export default function LoginForm() {
               <Button type="submit" disabled={loading} className="w-full">
                 {loading ? "Entrando..." : "Entrar"}
               </Button>
+            </div>
+
+            <div className="text-center text-sm text-[#6C757D]">
+              ¿No tienes una cuenta?{" "}
+              <Link href="/register" className="text-[#4A90E2] hover:underline font-medium">
+                Regístrate
+              </Link>
             </div>
           </form>
         </div>
